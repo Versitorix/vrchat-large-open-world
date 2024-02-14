@@ -21,10 +21,10 @@ namespace LargeOpenWorld
         int tileX = 0;
         int tileY = 0;
 
-        if (Math.Abs(currentPosition.x) > 500)
+        if (Math.Abs(currentPosition.x) > Island.TileLoader.TileSize / 2)
           tileX = Math.Sign(currentPosition.x);
 
-        if (Math.Abs(currentPosition.z) > 500)
+        if (Math.Abs(currentPosition.z) > Island.TileLoader.TileSize / 2)
           tileY = Math.Sign(currentPosition.z);
 
         Island.ChangeTilePlayer(new Vector2(tileX, tileY));
@@ -41,10 +41,10 @@ namespace LargeOpenWorld
         int tileX = 0;
         int tileY = 0;
 
-        if (Math.Abs(currentPosition.x) > 500)
+        if (Math.Abs(currentPosition.x) > Island.TileLoader.TileSize / 2)
           tileX = Math.Sign(currentPosition.x);
 
-        if (Math.Abs(currentPosition.z) > 500)
+        if (Math.Abs(currentPosition.z) > Island.TileLoader.TileSize / 2)
           tileY = Math.Sign(currentPosition.z);
 
         Island.ChangeTileVehicle(vehicle, new Vector2(tileX, tileY));

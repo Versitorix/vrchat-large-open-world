@@ -53,7 +53,7 @@ namespace LargeOpenWorld
         {
           GameObject instance = Instantiate(
               worldTile,
-              parent.transform.parent.TransformPoint(new Vector3(worldPosition.x * 1000 - 500, 0, worldPosition.y * 1000 - 500)),
+              parent.transform.parent.TransformPoint(new Vector3(worldPosition.x * TileSize - (TileSize / 2), 0, worldPosition.y * TileSize - (TileSize / 2))),
               parent.transform.parent.rotation
           );
           instance.transform.SetParent(parent.transform);
@@ -71,7 +71,7 @@ namespace LargeOpenWorld
 
       if (tile != null)
       {
-        tile.transform.localPosition = new Vector3(worldPosition.x * 1000 - 500, 0, worldPosition.y * 1000 - 500);
+        tile.transform.localPosition = new Vector3(worldPosition.x * TileSize - (TileSize / 2), 0, worldPosition.y * TileSize - (TileSize / 2));
         return tile;
       }
 
