@@ -36,7 +36,7 @@ namespace LargeOpenWorld {
       return null;
     }
 
-    public IslandSlot GetMasterDuplicateIsland(IslandSlot currentSlot)
+    public IslandSlot GetPriorityIsland(IslandSlot currentSlot)
     {
       foreach (IslandSlot slot in IslandSlots)
       {

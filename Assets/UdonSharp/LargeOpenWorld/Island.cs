@@ -15,6 +15,7 @@ namespace LargeOpenWorld
 
     private NetworkVehicle playerVehicle;
     private bool UpdateTileNextTick = false;
+    private int CheckForDuplicateInstanceAfter = 15;
 
     public void FixedUpdate()
     {
@@ -22,6 +23,21 @@ namespace LargeOpenWorld
       {
         UpdateTileNextTick = false;
         ValidateCurrentSlotOrChange();
+      }
+
+      if (CheckForDuplicateInstanceAfter == 0)
+      {
+        CheckForDuplicateInstanceAfter = 15;
+        IslandSlot HigherPrioritySlot = SlotsManager.GetPriorityIsland(CurrentSlot);
+
+        if (HigherPrioritySlot != null)
+        {
+          EnterSlot(HigherPrioritySlot);
+        }
+      }
+      else
+      {
+        CheckForDuplicateInstanceAfter -= 1;
       }
     }
 
