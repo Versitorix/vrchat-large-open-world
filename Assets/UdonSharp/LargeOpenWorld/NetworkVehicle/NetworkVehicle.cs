@@ -1,7 +1,5 @@
-﻿using System;
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
-using Varneon.VUdon.ArrayExtensions;
 using VRC.SDKBase;
 
 namespace LargeOpenWorld.Vehicle
@@ -18,7 +16,7 @@ namespace LargeOpenWorld.Vehicle
     public Vector2 VehicleTileLocation = new Vector2(0, 0);
 
     public bool IsInVehicle { get; private set; } = false;
-    public bool IsOwner { get; private set; } = false;
+    public bool IsOwnedByLocal { get; private set; } = false;
     private Rigidbody interalRigidBody;
     private BoxCollider interalBoxCollider;
 
@@ -32,12 +30,12 @@ namespace LargeOpenWorld.Vehicle
     {
       if (!IsInVehicle) return;
   
-      if (IsOwner && interalRigidBody != null)
+      if (IsOwnedByLocal && interalRigidBody != null)
       {
         interalRigidBody.position = VehicleGameObject.transform.position;
       }
 
-      if (!IsOwner && islandTileLoader.CurrentTile != VehicleTileLocation)
+      if (!IsOwnedByLocal && islandTileLoader.CurrentTile != VehicleTileLocation)
       {
         island.ChangeTileVehicle(this, VehicleTileLocation - islandTileLoader.CurrentTile);
       }
@@ -46,7 +44,7 @@ namespace LargeOpenWorld.Vehicle
     public void EnterPilot()
     {
       IsInVehicle = true;
-      IsOwner = true;
+      IsOwnedByLocal = true;
       interalBoxCollider.enabled = true;
       island.SetVehicle(this);
       Networking.SetOwner(Networking.LocalPlayer, gameObject);
@@ -61,7 +59,7 @@ namespace LargeOpenWorld.Vehicle
     public void Leave()
     {
       IsInVehicle = false;
-      IsOwner = false;
+      IsOwnedByLocal = false;
       interalBoxCollider.enabled = false;
       island.RemoveVehicle();
     }
@@ -76,7 +74,7 @@ namespace LargeOpenWorld.Vehicle
         VehicleRigidBody.position = position;
       }
 
-      if (IsOwner)
+      if (IsOwnedByLocal)
         RequestSerialization();
     }
 

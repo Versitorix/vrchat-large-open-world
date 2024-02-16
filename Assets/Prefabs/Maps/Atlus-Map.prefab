@@ -605,6 +605,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Atlus-Map
       objectReference: {fileID: 0}
+    - target: {fileID: 391417581804214339, guid: c1fd43d70c2f7c540a9fbe796e1ae552,
+        type: 3}
+      propertyPath: _syncMethod
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1088049736326171836, guid: c1fd43d70c2f7c540a9fbe796e1ae552,
         type: 3}
       propertyPath: serializationData.Prefab
@@ -3268,6 +3273,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1851934773364203756, guid: c1fd43d70c2f7c540a9fbe796e1ae552,
         type: 3}
+    - target: {fileID: 2148300604782826622, guid: c1fd43d70c2f7c540a9fbe796e1ae552,
+        type: 3}
+      propertyPath: _syncMethod
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2181137826768281118, guid: c1fd43d70c2f7c540a9fbe796e1ae552,
         type: 3}
       propertyPath: serializationData.Prefab
@@ -3331,7 +3341,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4610279823045596847, guid: c1fd43d70c2f7c540a9fbe796e1ae552, type: 3}
+    - {fileID: 7922746215289870938, guid: c1fd43d70c2f7c540a9fbe796e1ae552, type: 3}
+    - {fileID: 5561778342705006849, guid: c1fd43d70c2f7c540a9fbe796e1ae552, type: 3}
+    - {fileID: 477204523420873937, guid: c1fd43d70c2f7c540a9fbe796e1ae552, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4210069861141055786, guid: c1fd43d70c2f7c540a9fbe796e1ae552,
         type: 3}

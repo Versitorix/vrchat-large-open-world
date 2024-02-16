@@ -236,7 +236,7 @@ MonoBehaviour:
       Data: 14|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: LargeOpenWorld.IslandSlotsManager, Assembly-CSharp
+      Data: LargeOpenWorld.PlayerSeatsManager, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

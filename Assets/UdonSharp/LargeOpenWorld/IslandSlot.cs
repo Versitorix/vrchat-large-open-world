@@ -15,7 +15,7 @@ namespace LargeOpenWorld
     [UdonSynced]
     public int PrioritySeed;
 
-    public IslandSlotsManager WorldIslandsManager;
+    public PlayerSeatsManager WorldIslandsManager;
 
     private Vector2 nextTile = new Vector2(0.1f, 0.1f);
     private Island localIsland;
@@ -46,7 +46,6 @@ namespace LargeOpenWorld
 
       if (!player.isLocal && localIsland != null)
       {
-        localIsland.HandleIslandOwnershipLost();
         localIsland = null;
       }
     }
@@ -61,7 +60,7 @@ namespace LargeOpenWorld
       }
       else if (Tile[0] != 0 && Tile[1] != 0)
       {
-        Players = Players.Remove(VRCPlayerApi.GetPlayerId(Networking.LocalPlayer));
+        Players = Players.Remove(Networking.LocalPlayer.playerId);
         Networking.SetOwner(VRCPlayerApi.GetPlayerById(Players[1]), gameObject);
       }
 
@@ -97,7 +96,7 @@ namespace LargeOpenWorld
     {
       if (Networking.IsOwner(gameObject))
       {
-        Players = Players.AddUnique(VRCPlayerApi.GetPlayerId(player));
+        Players = Players.AddUnique(player.playerId);
         RequestSerialization();
       }
     }
@@ -106,7 +105,7 @@ namespace LargeOpenWorld
     {
       if (Networking.IsOwner(gameObject))
       {
-        Players = Players.Remove(VRCPlayerApi.GetPlayerId(player));
+        Players = Players.Remove(player.playerId);
         RequestSerialization();
       }
     }
