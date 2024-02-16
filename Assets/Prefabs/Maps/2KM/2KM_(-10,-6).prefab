@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5650024369698155379
+--- !u!1 &918631874323569158
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3244098997179909421}
-  - component: {fileID: 2207922496294510171}
-  - component: {fileID: 8389644766503786426}
+  - component: {fileID: 6440390514794837011}
+  - component: {fileID: 35098437679735732}
+  - component: {fileID: 704053335838258496}
   m_Layer: 0
   m_Name: 2KM_(-10,-6)
   m_TagString: Untagged
@@ -18,31 +18,31 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!4 &3244098997179909421
+--- !u!4 &6440390514794837011
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5650024369698155379}
+  m_GameObject: {fileID: 918631874323569158}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20000, y: 0, z: -12000}
+  m_LocalPosition: {x: -30000, y: 0, z: -18000}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!218 &2207922496294510171
+--- !u!218 &35098437679735732
 Terrain:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5650024369698155379}
+  m_GameObject: {fileID: 918631874323569158}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: f1f27e01cc3b2b04f8c075c4090acb18, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: ef32a62c23fd9de46881e5a1f1f8fa60, type: 2}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
@@ -64,7 +64,7 @@ Terrain:
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
   m_ReceiveGI: 1
-  m_ScaleInLightmap: 0.0128
+  m_ScaleInLightmap: 0.008533333
   m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
   m_GroupingID: 0
   m_RenderingLayerMask: 1
@@ -72,13 +72,13 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
---- !u!154 &8389644766503786426
+--- !u!154 &704053335838258496
 TerrainCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5650024369698155379}
+  m_GameObject: {fileID: 918631874323569158}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -90,5 +90,5 @@ TerrainCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_TerrainData: {fileID: 15600000, guid: f1f27e01cc3b2b04f8c075c4090acb18, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: ef32a62c23fd9de46881e5a1f1f8fa60, type: 2}
   m_EnableTreeColliders: 1

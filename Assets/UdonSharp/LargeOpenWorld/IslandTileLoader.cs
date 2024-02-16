@@ -1,9 +1,8 @@
-﻿
+﻿using System;
 using LargeOpenWorld.Enums;
 using UdonSharp;
 using UnityEngine;
 using Varneon.VUdon.ArrayExtensions;
-using VRC.SDKBase;
 
 namespace LargeOpenWorld
 {
@@ -14,12 +13,31 @@ namespace LargeOpenWorld
     public GameObject[] Tiles;
     public Vector2 CurrentTile { get; private set; } = new Vector2(0, 0);
 
-    public void ChangeTile(Vector2 direction)
+    public Vector2 NextTile = new Vector2(0.1f, 0.1f);
+
+    void Update()
     {
-      if (CurrentTile + direction == CurrentTile) return;
-  
-      CurrentTile += direction;
-      
+      if (NextTile != new Vector2(0.1f, 0.1f))
+      {
+        //ChangeTile(NextTile);
+      }
+    }
+
+    public bool QueueTileChange(Vector2 direction)
+    {
+      if (CurrentTile + direction == CurrentTile || CurrentTile + direction == NextTile)
+        return false;
+
+      NextTile = CurrentTile + direction;
+      return true;
+    }
+
+    private void ChangeTile(Vector2 tile)
+    {
+      Debug.Log($"Tile changing to {tile}");
+      CurrentTile = tile;
+      NextTile = new Vector2(0.1f, 0.1f);
+
       GameObject[] nextTiles = new GameObject[9];
       Vector2[] coords = WorldTileCoordinates.GetCoordArray();
 
@@ -27,7 +45,7 @@ namespace LargeOpenWorld
       {
         nextTiles[tileIndex] = MoveLoadedTileOrLoad(coords[tileIndex], gameObject);
       }
-  
+
       Cleanup(nextTiles);
     }
 
