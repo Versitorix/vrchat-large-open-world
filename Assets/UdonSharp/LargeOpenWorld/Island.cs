@@ -71,7 +71,7 @@ namespace LargeOpenWorld
       Quaternion headRotation = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).rotation;
       Vector3 nextPosition = UpdateTileWithDirection(playerPosition, direction);
       Networking.LocalPlayer.TeleportTo(nextPosition, headRotation);
-      SeatsManager.LocalSeat.MoveTo(TileLoader.NextTile);
+      SeatsManager.ProcessPlayerChangedTile(TileLoader.NextTile);
     }
 
     /// <summary>
@@ -99,7 +99,7 @@ namespace LargeOpenWorld
     public void RemoveVehicle()
     {
       playerVehicle = null;
-      SeatsManager.LocalSeat.MoveTo(TileLoader.CurrentTile);
+      SeatsManager.ProcessPlayerChangedTile(TileLoader.CurrentTile);
     }
 
     /// <summary>
