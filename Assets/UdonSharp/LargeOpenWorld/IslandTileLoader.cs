@@ -32,6 +32,16 @@ namespace LargeOpenWorld
       return true;
     }
 
+    public Vector2 GetLatestTile()
+    {
+      if (NextTile != new Vector2(0.1f, 0.1f))
+      {
+        return NextTile;
+      }
+
+      return CurrentTile;
+    }
+
     private void ChangeTile(Vector2 tile)
     {
       Debug.Log($"Tile changing to {tile}");

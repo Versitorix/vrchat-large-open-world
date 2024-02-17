@@ -41,9 +41,7 @@ public class PlayerSeat : UdonSharpBehaviour
   {
     if (Owner == -1 || IsOwnedByLocal) return;
 
-    Vector2 tileOffset = (Tile - Island.TileLoader.CurrentTile) * Island.TileLoader.TileSize;
-    transform.position = Vector3.SmoothDamp(transform.position, Position + new Vector3(tileOffset.x, 0, tileOffset.y), ref velocity, 0.05f);
-    transform.rotation = Quaternion.Slerp(transform.rotation, Rotation, 0.1f);
+    UpdatePositionWithNetworkData();
   }
 
   public override bool OnOwnershipRequest(VRCPlayerApi requestingPlayer, VRCPlayerApi requestedOwner)
@@ -71,12 +69,14 @@ public class PlayerSeat : UdonSharpBehaviour
       }
       else
       {
+        // Reset seat. Recieved ownership without requesting, probably a player disconnect.
         Owner = -1;
         RequestSerialization();
       }
     }
     else if (IsOwnedByLocal)
     {
+      //Ownership lost
       IsOwnedByLocal = false;
       ConfigureNotOwned();
       SeatsManager.ClearLocalSeat();
@@ -128,12 +128,28 @@ public class PlayerSeat : UdonSharpBehaviour
     }
   }
 
-  public void MoveTo(Vector2 newTile)
+  public void DispatchTileChange(Vector2 newTile)
   {
     Tile = newTile;
     ConfigureOwned();
     GetVRCStation().UseStation(Networking.LocalPlayer);
     RequestSerialization();
+  }
+
+  public void UpdatePositionWithNetworkData(bool skipInterpolate = false)
+  {
+    Vector2 tileOffset = (Tile - Island.TileLoader.GetLatestTile()) * Island.TileLoader.TileSize;
+
+    if (skipInterpolate)
+    {
+      transform.position = Position + new Vector3(tileOffset.x, 0, tileOffset.y);
+      transform.rotation = Rotation;
+    }
+    else 
+    {
+      transform.position = Vector3.Lerp(transform.position, Position + new Vector3(tileOffset.x, 0, tileOffset.y), 0.05f);
+      transform.rotation = Quaternion.Slerp(transform.rotation, Rotation, 0.05f);
+    }
   }
 
   private VRCStation GetVRCStation()

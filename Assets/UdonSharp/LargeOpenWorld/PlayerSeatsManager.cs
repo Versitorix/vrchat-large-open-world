@@ -1,4 +1,5 @@
 ﻿using UdonSharp;
+using UnityEngine;
 using VRC.SDKBase;
 
 namespace LargeOpenWorld
@@ -33,6 +34,22 @@ namespace LargeOpenWorld
       if (seatsReady == PlayerSeats.Length)
       {
         AssignFreeSeat();
+      }
+    }
+
+    public void ProcessPlayerChangedTile(Vector2 tile)
+    {
+      foreach (PlayerSeat seat in PlayerSeats)
+      {
+        if (seat.IsOwnedByLocal)
+        {
+          seat.DispatchTileChange(tile);
+        }
+        else if (seat.Owner != -1)
+        {
+          // Updated position early to prevent flicker in remote user position when changing tile. 
+          seat.UpdatePositionWithNetworkData(true);
+        }
       }
     }
 
