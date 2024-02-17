@@ -336,6 +336,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6141758681580453101, guid: efcd794894cadae42b5380273b085739,
         type: 3}
+    - target: {fileID: 6182078268888676862, guid: efcd794894cadae42b5380273b085739,
+        type: 3}
+      propertyPath: vehicle
+      value: 
+      objectReference: {fileID: 536094831385481837}
+    - target: {fileID: 6182078268888676862, guid: efcd794894cadae42b5380273b085739,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 6182078268888676862, guid: efcd794894cadae42b5380273b085739,
+        type: 3}
     - target: {fileID: 6276239142239352957, guid: efcd794894cadae42b5380273b085739,
         type: 3}
       propertyPath: serializedProgramAsset
@@ -396,6 +407,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 44d7329c048c630408e5346e80749180,
         type: 2}
+    - target: {fileID: 7287673179417672965, guid: efcd794894cadae42b5380273b085739,
+        type: 3}
+      propertyPath: vehicle
+      value: 
+      objectReference: {fileID: 536094831385481837}
+    - target: {fileID: 7287673179417672965, guid: efcd794894cadae42b5380273b085739,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7287673179417672965, guid: efcd794894cadae42b5380273b085739,
+        type: 3}
     - target: {fileID: 7393985065550561434, guid: efcd794894cadae42b5380273b085739,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -479,83 +501,15 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8851872280121013986}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6141758680273700197, guid: efcd794894cadae42b5380273b085739,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8314717145571175407}
-    - targetCorrespondingSourceObject: {fileID: 6141758680061051139, guid: efcd794894cadae42b5380273b085739,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4609154105633018395}
     - targetCorrespondingSourceObject: {fileID: 6141758681580453106, guid: efcd794894cadae42b5380273b085739,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8087696154307090678}
+      addedObject: {fileID: 3927419948657381538}
     - targetCorrespondingSourceObject: {fileID: 6141758680559467802, guid: efcd794894cadae42b5380273b085739,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5709797117542424332}
+      addedObject: {fileID: 1596624434658003140}
   m_SourcePrefab: {fileID: 100100000, guid: efcd794894cadae42b5380273b085739, type: 3}
---- !u!1 &3756270363660373702 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6141758680061051139, guid: efcd794894cadae42b5380273b085739,
-    type: 3}
-  m_PrefabInstance: {fileID: 6997216150706442181}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4609154105633018395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3756270363660373702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57ed2b709538e394889a58d4df126e7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  _udonSharpBackingUdonBehaviour: {fileID: 0}
-  vehicle: {fileID: 536094831385481837}
-  IsPilot: 0
---- !u!1 &3756270364000848544 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6141758680273700197, guid: efcd794894cadae42b5380273b085739,
-    type: 3}
-  m_PrefabInstance: {fileID: 6997216150706442181}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8314717145571175407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3756270364000848544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57ed2b709538e394889a58d4df126e7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  _udonSharpBackingUdonBehaviour: {fileID: 0}
-  vehicle: {fileID: 536094831385481837}
-  IsPilot: 1
 --- !u!4 &3756270364144109746 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6141758680382097271, guid: efcd794894cadae42b5380273b085739,
@@ -586,7 +540,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6997216150706442181}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8087696154307090678
+--- !u!114 &3927419948657381538
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -616,7 +570,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6997216150706442181}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5709797117542424332
+--- !u!114 &1596624434658003140
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

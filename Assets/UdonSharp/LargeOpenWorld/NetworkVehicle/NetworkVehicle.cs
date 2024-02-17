@@ -5,39 +5,26 @@ using VRC.SDKBase;
 namespace LargeOpenWorld.Vehicle
 {
   [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
+  [DefaultExecutionOrder(20)]
   public class NetworkVehicle : UdonSharpBehaviour
   {
     public GameObject VehicleGameObject;
     public Rigidbody VehicleRigidBody;
-    public Island island;
-    public IslandTileLoader islandTileLoader;
+    public Island Island;
 
     [UdonSynced]
     public Vector2 VehicleTileLocation = new Vector2(0, 0);
 
     public bool IsInVehicle { get; private set; } = false;
     public bool IsOwnedByLocal { get; private set; } = false;
-    private Rigidbody interalRigidBody;
-    private BoxCollider interalBoxCollider;
 
-    public void Start()
+    public override void PostLateUpdate()
     {
-      interalRigidBody = GetComponent<Rigidbody>();
-      interalBoxCollider = GetComponent<BoxCollider>();
-    }
-
-    public void FixedUpdate()
-    {
-      if (!IsInVehicle) return;
-  
-      if (IsOwnedByLocal && interalRigidBody != null)
+      if (!IsOwnedByLocal)
       {
-        interalRigidBody.position = VehicleGameObject.transform.position;
-      }
-
-      if (!IsOwnedByLocal && islandTileLoader.CurrentTile != VehicleTileLocation)
-      {
-        island.ChangeTileVehicle(this, VehicleTileLocation - islandTileLoader.CurrentTile);
+        Vector2 tileOffset = (VehicleTileLocation - Island.TileLoader.CurrentTile) * Island.TileLoader.TileSize;
+        VehicleGameObject.transform.position = VehicleGameObject.transform.position + new Vector3(tileOffset.x, 0, tileOffset.y);
+        VehicleRigidBody.position = VehicleRigidBody.position + new Vector3(tileOffset.x, 0, tileOffset.y);
       }
     }
 
@@ -45,23 +32,21 @@ namespace LargeOpenWorld.Vehicle
     {
       IsInVehicle = true;
       IsOwnedByLocal = true;
-      interalBoxCollider.enabled = true;
-      island.SetVehicle(this);
+      Island.SetVehicle(this);
       Networking.SetOwner(Networking.LocalPlayer, gameObject);
     }
 
     public void EnterPassenger()
     {
       IsInVehicle = true;
-      island.SetVehicle(this);
+      Island.SetVehicle(this);
     }
 
     public void Leave()
     {
       IsInVehicle = false;
       IsOwnedByLocal = false;
-      interalBoxCollider.enabled = false;
-      island.RemoveVehicle();
+      Island.RemoveVehicle();
     }
 
     public void MoveTo(Vector3 position, Vector2 newTile)
