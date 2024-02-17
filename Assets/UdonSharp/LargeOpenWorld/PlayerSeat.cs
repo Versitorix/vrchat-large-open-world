@@ -11,7 +11,6 @@ public class PlayerSeat : UdonSharpBehaviour
 {
   public Island Island;
   public PlayerSeatsManager SeatsManager;
-  public Rigidbody InternalRigidBody;
 
   [UdonSynced]
   public int Owner = -1;
@@ -26,53 +25,25 @@ public class PlayerSeat : UdonSharpBehaviour
 
   private VRCStation station;
   private bool initialized = false;
+  private Vector3 velocity = Vector3.zero;
 
-  public void Start()
-  {
-    Tile[0] = 0;
-    Tile[1] = 0;
-  }
-
-  public void FixedUpdate()
+  public override void PostLateUpdate()
   {
     if (IsOwnedByLocal)
     {
-      ConfigureOwned();
-
-      Vector3 currentPosition = Networking.LocalPlayer.GetPosition();
-      int tileX = 0;
-      int tileY = 0;
-      bool moved = false;
-
-      if (Math.Abs(currentPosition.x) > Island.TileLoader.TileSize / 2)
-      {
-        tileX = Math.Sign(currentPosition.x);
-        moved = true;
-      }
-
-      if (Math.Abs(currentPosition.z) > Island.TileLoader.TileSize / 2)
-      {
-        tileY = Math.Sign(currentPosition.z);
-        moved = true;
-      }
-
-      if (moved)
-      {
-        Debug.Log($"Tile x:{tileX} y:{tileY}");
-        Island.ChangeTilePlayer(this, new Vector2(tileX, tileY));
-      }
+      Position = Networking.LocalPlayer.GetPosition();
+      Rotation = Networking.LocalPlayer.GetRotation();
+      transform.SetPositionAndRotation(Position, Rotation);
     }
   }
 
-  public void Update()
+  void Update()
   {
-    // Move non owned seats to position relative to local player
-    /* if (Owner != -1 && !IsOwnedByLocal)
-    {
-      Vector2 tileOffset = (Tile - Island.TileLoader.CurrentTile) * Island.TileLoader.TileSize;
-      GetInteralRigidBody().MovePosition(Position + new Vector3(tileOffset.x, 0, tileOffset.y));
-      GetInteralRigidBody().rotation = Rotation;
-    } */
+    if (Owner == -1 || IsOwnedByLocal) return;
+
+    Vector2 tileOffset = (Tile - Island.TileLoader.CurrentTile) * Island.TileLoader.TileSize;
+    transform.position = Vector3.SmoothDamp(transform.position, Position + new Vector3(tileOffset.x, 0, tileOffset.y), ref velocity, 0.05f);
+    transform.rotation = Quaternion.Slerp(transform.rotation, Rotation, 0.1f);
   }
 
   public override bool OnOwnershipRequest(VRCPlayerApi requestingPlayer, VRCPlayerApi requestedOwner)
@@ -118,7 +89,7 @@ public class PlayerSeat : UdonSharpBehaviour
     Owner = Networking.LocalPlayer.playerId;
     IsOwnedByLocal = true;
     ConfigureOwned();
-    //GetVRCStation().UseStation(Networking.LocalPlayer);
+    GetVRCStation().UseStation(Networking.LocalPlayer);
     RequestSerialization();
   }
 
@@ -129,6 +100,10 @@ public class PlayerSeat : UdonSharpBehaviour
     if (player != Networking.LocalPlayer)
     {
       ConfigureNotOwned();
+    }
+    else
+    {
+      ConfigureOwned();
     }
   }
 
@@ -153,13 +128,11 @@ public class PlayerSeat : UdonSharpBehaviour
     }
   }
 
-  public void MoveTo(Vector3 position, Vector2 newTile)
+  public void MoveTo(Vector2 newTile)
   {
-    Debug.Log($"Teleport to {position}");
     Tile = newTile;
-    Quaternion headRotation = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).rotation;
-    Networking.LocalPlayer.TeleportTo(position, headRotation);
     ConfigureOwned();
+    GetVRCStation().UseStation(Networking.LocalPlayer);
     RequestSerialization();
   }
 
@@ -174,17 +147,13 @@ public class PlayerSeat : UdonSharpBehaviour
   private void ConfigureOwned()
   {
     GetVRCStation().PlayerMobility = VRCStation.Mobility.Mobile;
-    InternalRigidBody.interpolation = RigidbodyInterpolation.None;
-    InternalRigidBody.freezeRotation = true;
-    InternalRigidBody.constraints = RigidbodyConstraints.FreezeAll;
     Position = Networking.LocalPlayer.GetPosition();
     Rotation = Networking.LocalPlayer.GetRotation();
-    transform.position = Position;
+    transform.SetPositionAndRotation(Position, Rotation);
   }
 
   public void ConfigureNotOwned()
   {
-    InternalRigidBody.interpolation = RigidbodyInterpolation.Interpolate;
     GetVRCStation().PlayerMobility = VRCStation.Mobility.ImmobilizeForVehicle;
   }
 }

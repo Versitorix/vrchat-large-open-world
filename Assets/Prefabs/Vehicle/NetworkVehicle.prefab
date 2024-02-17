@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1441930854331404833}
   - component: {fileID: -3150946616050183281}
-  - component: {fileID: 8376655608183079405}
   - component: {fileID: 7614032126358566574}
   - component: {fileID: 4785554755173618488}
   m_Layer: 22
@@ -62,27 +61,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!65 &8376655608183079405
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3753035106994890035}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 12450103
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 4.3, y: 2.04, z: 4.98}
-  m_Center: {x: 0, y: 0.97, z: 0}
 --- !u!114 &7614032126358566574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,7 +85,8 @@ MonoBehaviour:
   _udonSharpBackingUdonBehaviour: {fileID: 4785554755173618488}
   VehicleGameObject: {fileID: 0}
   VehicleRigidBody: {fileID: 0}
-  Players: 
+  Island: {fileID: 0}
+  VehicleTileLocation: {x: 0, y: 0}
 --- !u!114 &4785554755173618488
 MonoBehaviour:
   m_ObjectHideFlags: 0

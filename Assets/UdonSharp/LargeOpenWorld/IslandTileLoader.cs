@@ -15,11 +15,11 @@ namespace LargeOpenWorld
 
     public Vector2 NextTile = new Vector2(0.1f, 0.1f);
 
-    void Update()
+    void LateUpdate()
     {
       if (NextTile != new Vector2(0.1f, 0.1f))
       {
-        //ChangeTile(NextTile);
+        ChangeTile(NextTile);
       }
     }
 
