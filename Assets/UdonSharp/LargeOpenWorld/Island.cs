@@ -12,7 +12,7 @@ namespace LargeOpenWorld
     public IslandTileLoader TileLoader;
     public PlayerSeatsManager SeatsManager;
 
-    private NetworkVehicle playerVehicle;
+    private OpenWorldVehicle playerVehicle;
   
     private bool inZone = false;
 
@@ -82,15 +82,10 @@ namespace LargeOpenWorld
     public void ChangeTileVehicle(Vector2 direction)
     {
       Vector3 nextPosition = UpdateTileWithDirection(playerVehicle.VehicleGameObject.transform.position, direction);
-      playerVehicle.MoveTo(nextPosition, TileLoader.CurrentTile);
+      playerVehicle.MoveTo(nextPosition, TileLoader.GetLatestTile());
     }
 
-    public void ChangeTileNoTeleport(Vector2 direction)
-    {
-      UpdateTileWithDirection(Vector3.zero, direction);
-    }
-
-    public void SetVehicle(NetworkVehicle vehicle)
+    public void SetVehicle(OpenWorldVehicle vehicle)
     {
       Debug.Log("Entering vehicle");
       playerVehicle = vehicle;
@@ -99,7 +94,7 @@ namespace LargeOpenWorld
     public void RemoveVehicle()
     {
       playerVehicle = null;
-      SeatsManager.ProcessPlayerChangedTile(TileLoader.CurrentTile);
+      SeatsManager.ProcessPlayerChangedTile(TileLoader.GetLatestTile());
     }
 
     /// <summary>
