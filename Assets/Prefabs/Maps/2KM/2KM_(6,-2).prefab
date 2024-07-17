@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6098106290497124189
+--- !u!1 &3737101077360497560
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 439692954717068336}
-  - component: {fileID: 8849292187578535232}
-  - component: {fileID: 4349785869155816980}
+  - component: {fileID: 5764998679373833487}
+  - component: {fileID: 8892534119140851148}
+  - component: {fileID: 8586707438313642780}
   m_Layer: 0
   m_Name: 2KM_(6,-2)
   m_TagString: Untagged
@@ -18,13 +18,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!4 &439692954717068336
+--- !u!4 &5764998679373833487
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6098106290497124189}
+  m_GameObject: {fileID: 3737101077360497560}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 18000, y: 0, z: -6000}
@@ -33,13 +33,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!218 &8849292187578535232
+--- !u!218 &8892534119140851148
 Terrain:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6098106290497124189}
+  m_GameObject: {fileID: 3737101077360497560}
   m_Enabled: 1
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: e6ef0af7a4abd904ca4e0869b8e2c8d6, type: 2}
@@ -72,13 +72,13 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
---- !u!154 &4349785869155816980
+--- !u!154 &8586707438313642780
 TerrainCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6098106290497124189}
+  m_GameObject: {fileID: 3737101077360497560}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

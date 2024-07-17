@@ -222,6 +222,7 @@ MonoBehaviour:
   - {fileID: 768654198}
   - {fileID: 1618417134}
   - {fileID: 2137392721}
+  Island: {fileID: 747797425}
 --- !u!4 &221579268
 Transform:
   m_ObjectHideFlags: 0
@@ -658,6 +659,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Atlus-Map
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200096464401916613, guid: d60969fc324ad86428472766cd5bf637,
+        type: 3}
+      propertyPath: ViewDistance
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8200096464401916613, guid: d60969fc324ad86428472766cd5bf637,
         type: 3}
