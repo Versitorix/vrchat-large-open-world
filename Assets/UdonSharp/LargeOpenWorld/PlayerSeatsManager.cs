@@ -8,6 +8,7 @@ namespace LargeOpenWorld
   public class PlayerSeatsManager : UdonSharpBehaviour
   {
     public PlayerSeat[] PlayerSeats;
+    public Island Island;
 
     [System.NonSerialized]
     public PlayerSeat LocalSeat;

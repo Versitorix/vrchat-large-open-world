@@ -9,7 +9,6 @@ using VRC.SDKBase;
 [UdonBehaviourSyncMode(BehaviourSyncMode.Continuous)]
 public class PlayerSeat : UdonSharpBehaviour
 {
-  public Island Island;
   public PlayerSeatsManager SeatsManager;
 
   [UdonSynced]
@@ -138,7 +137,7 @@ public class PlayerSeat : UdonSharpBehaviour
 
   public void UpdatePositionWithNetworkData(bool skipInterpolate = false)
   {
-    Vector2 tileOffset = (Tile - Island.TileLoader.GetLatestTile()) * Island.TileLoader.TileSize;
+    Vector2 tileOffset = (Tile - SeatsManager.Island.TileLoader.GetLatestTile()) * SeatsManager.Island.TileLoader.TileSize;
 
     if (skipInterpolate)
     {

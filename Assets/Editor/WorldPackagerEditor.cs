@@ -96,7 +96,7 @@ namespace LargeOpenWorld.Editor
       IslandTileLoader tileLoader = worldPrefab.GetComponentInChildren<IslandTileLoader>();
       tileLoader.Tiles = worldTilePrefabs;
       tileLoader.TileSize = worldPackager.TileSize;
-      Transform geometry = worldPrefab.transform.GetChild(3);
+      Transform geometry = worldPrefab.transform.GetChild(0);
       WorldTileCoordinates.GetCoordArray().ForEach((coord) =>
       {
         GameObject tilePrefab = worldTilePrefabs.First((gameObject) => gameObject.name.EndsWith($"({coord.x},{coord.y})"));
