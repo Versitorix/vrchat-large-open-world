@@ -1,8 +1,3 @@
-﻿#local-test-settings Toggle {
-    border-bottom-width: 0;
-    background-color: rgba(0,0,0,0);
-}
-
-#local-test-settings Toggle Label {
-    -unity-font-style: normal;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:7fdaa41cb72acddc39331ad257a947cc1ca7bff871b289dfe1a094ff11583b3d
+size 169
