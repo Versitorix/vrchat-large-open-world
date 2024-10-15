@@ -1,4 +1,4 @@
-﻿using BestHTTP.SecureProtocol.Org.BouncyCastle.Security.Certificates;
+﻿using System;
 using LargeOpenWorld.Vehicle;
 using UdonSharp;
 using UnityEngine;
@@ -9,70 +9,55 @@ namespace LargeOpenWorld
   [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
   public class Island : UdonSharpBehaviour
   {
-    public IslandSlotsManager SlotsManager;
     public IslandTileLoader TileLoader;
-    public IslandSlot CurrentSlot;
+    public PlayerSeatsManager SeatsManager;
 
-    private NetworkVehicle playerVehicle;
-    private bool UpdateTileNextTick = false;
-    private int CheckForDuplicateInstanceAfter = 15;
+    private OpenWorldVehicle playerVehicle;
+  
+    private bool inZone = false;
 
-    public void FixedUpdate()
+    void Update()
     {
-      if (UpdateTileNextTick == true)
+      Vector3 currentPosition = Networking.LocalPlayer.GetPosition();
+      int tileX = 0;
+      int tileY = 0;
+      bool inZoneThisFrame = false;
+
+      if (Math.Abs(currentPosition.x) > TileLoader.TileSize / 2)
       {
-        UpdateTileNextTick = false;
-        ValidateCurrentSlotOrChange();
+        tileX = Math.Sign(currentPosition.x);
+        inZoneThisFrame = true;
       }
 
-      if (CheckForDuplicateInstanceAfter == 0)
+      if (Math.Abs(currentPosition.z) > TileLoader.TileSize / 2)
       {
-        CheckForDuplicateInstanceAfter = 15;
-        IslandSlot HigherPrioritySlot = SlotsManager.GetPriorityIsland(CurrentSlot);
+        tileY = Math.Sign(currentPosition.z);
+        inZoneThisFrame = true;
+      }
 
-        if (HigherPrioritySlot != null)
+      if (!inZoneThisFrame && inZone)
+      {
+        inZone = false;
+      }
+      else if (inZoneThisFrame && !inZone)
+      {
+        inZone = true;
+        if (playerVehicle == null)
         {
-          EnterSlot(HigherPrioritySlot);
+          ChangeTilePlayer(new Vector2Int(tileX, tileY));
+        }
+        else
+        {
+          ChangeTileVehicle(new Vector2Int(tileX, tileY));
         }
       }
-      else
-      {
-        CheckForDuplicateInstanceAfter -= 1;
-      }
-    }
-
-    public override void OnPlayerTriggerEnter(VRCPlayerApi player)
-    {
-      CurrentSlot.AddPlayer(player);
-    }
-
-    public override void OnPlayerTriggerExit(VRCPlayerApi player)
-    {
-      CurrentSlot.RemovePlayer(player);
     }
 
     public override void OnPlayerRespawn(VRCPlayerApi player)
     {
-      if (player.isLocal && TileLoader.CurrentTile != Vector2.zero)
+      if (player.isLocal && TileLoader.GetLatestTile() != Vector2.zero)
       {
-        TileLoader.ChangeTile(Vector2.zero - TileLoader.CurrentTile);
-        EnterSlot(SlotsManager.GetJoinableIslandForTile(Vector2.zero));
-      }
-    }
-
-    public void EnterSlot(IslandSlot slot)
-    {
-      if (Networking.IsOwner(CurrentSlot.gameObject))
-      {
-        CurrentSlot.Leave();
-      }
-
-      CurrentSlot = slot;
-      transform.position = slot.transform.position;
-
-      if (slot.Tile.Length == 0)
-      {
-        CurrentSlot.EnterAndTakeOwner(TileLoader.CurrentTile, this);
+        TileLoader.MoveInDirection(Vector2Int.zero - TileLoader.GetLatestTile());
       }
     }
 
@@ -80,11 +65,13 @@ namespace LargeOpenWorld
     /// Move player to a new tile.
     /// </summary>
     /// <param name="direction"></param>
-    public void ChangeTilePlayer(Vector2 direction)
+    public void ChangeTilePlayer(Vector2Int direction)
     {
-      Vector3 nextPosition = UpdateTileWithDirection(Networking.LocalPlayer.GetPosition(), direction);
+      Vector3 playerPosition = Networking.LocalPlayer.GetPosition();
       Quaternion headRotation = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).rotation;
+      Vector3 nextPosition = UpdateTileWithDirection(playerPosition, direction);
       Networking.LocalPlayer.TeleportTo(nextPosition, headRotation);
+      SeatsManager.ProcessPlayerChangedTile(TileLoader.GetLatestTile());
     }
 
     /// <summary>
@@ -92,30 +79,22 @@ namespace LargeOpenWorld
     /// </summary>
     /// <param name="vehicle"></param>
     /// <param name="direction"></param>
-    public void ChangeTileVehicle(NetworkVehicle vehicle, Vector2 direction)
+    public void ChangeTileVehicle(Vector2Int direction)
     {
-      Vector3 nextPosition = UpdateTileWithDirection(vehicle.VehicleGameObject.transform.position, direction);
-      vehicle.MoveTo(nextPosition, TileLoader.CurrentTile);
+      Vector3 nextPosition = UpdateTileWithDirection(playerVehicle.VehicleGameObject.transform.position, direction);
+      playerVehicle.MoveTo(nextPosition, TileLoader.GetLatestTile());
     }
 
-    public void ChangeTileNoTeleport(Vector2 direction)
+    public void SetVehicle(OpenWorldVehicle vehicle)
     {
-      UpdateTileWithDirection(Vector3.zero, direction);
-    }
-
-    public void HandleIslandOwnershipLost()
-    {
-      
-    }
-
-    public void SetVehicle(NetworkVehicle vehicle)
-    {
+      Debug.Log("Entering vehicle");
       playerVehicle = vehicle;
     }
 
     public void RemoveVehicle()
     {
       playerVehicle = null;
+      SeatsManager.ProcessPlayerChangedTile(TileLoader.GetLatestTile());
     }
 
     /// <summary>
@@ -124,55 +103,15 @@ namespace LargeOpenWorld
     /// <param name="position">Position of the current entity</param>
     /// <param name="direction">Direction of movement</param>
     /// <returns>Next position for the entity</returns>
-    private Vector3 UpdateTileWithDirection(Vector3 position, Vector2 direction)
+    private Vector3 UpdateTileWithDirection(Vector3 position, Vector2Int direction)
     {
-      Vector3 localNextPosition = transform.InverseTransformPoint(
-        new Vector3(
-          position.x - TileLoader.TileSize * direction.x,
-          position.y,
-          position.z - TileLoader.TileSize * direction.y
-        )
+      TileLoader.MoveInDirection(direction);
+
+      return new Vector3(
+        position.x - TileLoader.TileSize * direction.x,
+        position.y,
+        position.z - TileLoader.TileSize * direction.y
       );
-
-      TileLoader.ChangeTile(direction);
-      IslandSlot existingSlot = SlotsManager.GetJoinableIslandForTile(TileLoader.CurrentTile);
-
-      if (existingSlot != null)
-      {
-        EnterSlot(existingSlot);
-      }
-      else if (!Networking.IsOwner(CurrentSlot.gameObject) || CurrentSlot.Players.Length >= 1)
-      {
-        EnterSlot(SlotsManager.GetFreeSlot());
-      }
-      else
-      {
-        CurrentSlot.UpdateTile(TileLoader.CurrentTile);
-      }
-
-      return transform.TransformPoint(localNextPosition);
-    }
-
-    private void ValidateCurrentSlotOrChange()
-    {
-      if (
-        CurrentSlot.Tile[0] != (int)TileLoader.CurrentTile.x
-        || CurrentSlot.Tile[1] != (int)TileLoader.CurrentTile.y
-      )
-      {
-        if (playerVehicle == null)
-        {
-          Vector3 nextPosition = UpdateTileWithDirection(Networking.LocalPlayer.GetPosition(), Vector2.zero);
-          Quaternion headRotation = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head).rotation;
-          Networking.LocalPlayer.TeleportTo(nextPosition, headRotation);
-        }
-        else
-        {
-          Vector3 nextPosition = UpdateTileWithDirection(playerVehicle.gameObject.transform.position, Vector2.zero);
-
-          playerVehicle.MoveTo(nextPosition, TileLoader.CurrentTile);
-        }
-      }
     }
   }
 }
